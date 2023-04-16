@@ -10,16 +10,16 @@ import (
 
 var ErrInvalidString = errors.New("invalid string")
 
-// isLetterDigit wraps strconv.Atoi to be more usable in conditionals for checking is rune digit
+// isLetterDigit wraps strconv.Atoi to be more usable in conditionals for checking is rune digit.
 func isRuneDigit(letter rune) bool {
 	_, err := strconv.Atoi(string(letter))
 	return err == nil
 }
 
-// Unpack unpacks strings according to task setting
+// Unpack unpacks strings according to task setting.
 func Unpack(s string) (string, error) {
 	var b strings.Builder
-	r := []rune(s) // Beacuse unicode runes may occur in the input, not just bytes
+	r := []rune(s) // Because unicode runes may occur in the input, not just bytes.
 	if len(r) == 0 {
 		return "", nil
 	}
@@ -32,7 +32,7 @@ func Unpack(s string) (string, error) {
 	// Go from the end to the beginig.
 	// If r[i] and r[i-1] are both digits - return error.
 	// If r[i-1] is digit - repeat the rune r[i] as many times as necessary and jump over it.
-	// Else - write r[i]
+	// Else - write r[i].
 	for i := len(r) - 1; i >= 1; i-- {
 		if isRuneDigit(r[i]) && isRuneDigit(r[i-1]) {
 			return "", ErrInvalidString
@@ -44,9 +44,9 @@ func Unpack(s string) (string, error) {
 			b.WriteRune(r[i])
 		}
 	}
-	// During the reverse loop, we didn't write the last character if before that we did not meet a digit. Fixing it
+	// During the reverse loop, we didn't write the last character if before that we did not meet a digit. Fixing it.
 	if !isRuneDigit(r[1]) {
 		b.WriteRune(r[0])
 	}
-	return stringutil.Reverse(b.String()), nil // Our b has reverse order. Reverse it again to satisfy the task statement
+	return stringutil.Reverse(b.String()), nil // Our b has reverse order. Reverse it again to satisfy the task statement.
 }
