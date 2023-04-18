@@ -13,10 +13,10 @@ var ErrInvalidString = errors.New("invalid string")
 
 // Unpack unpacks strings according to task setting.
 func Unpack(s string) (string, error) {
-	var b strings.Builder
 	if len(s) == 0 {
 		return "", nil
 	}
+	var b strings.Builder
 	r := []rune(s) // Because unicode runes may occur in the input, not just bytes.
 	if unicode.IsDigit(r[0]) {
 		return "", ErrInvalidString
